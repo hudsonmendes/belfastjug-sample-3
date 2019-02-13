@@ -1,21 +1,18 @@
-buildscript {
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.2.RELEASE")
-    }
-}
-
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.1.2.RELEASE'
+    id 'eclipse'
+    id 'application'
 }
 
+sourceCompatibility = 11.0
+targetCompatibility = 11.0
+
 repositories {
+	mavenCentral()
     jcenter()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'colt:colt:1.2.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.0'
 }
