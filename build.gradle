@@ -2,10 +2,11 @@ plugins {
     id 'java'
     id 'eclipse'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
 }
 
-sourceCompatibility = 11.0
-targetCompatibility = 11.0
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
@@ -15,4 +16,16 @@ repositories {
 dependencies {
     implementation 'colt:colt:1.2.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.0'
+}
+
+ext {
+	entryPointClass = 'com.hudsonmendes.belfastjug.EntryPoint'
+}
+
+mainClassName = "${entryPointClass}"
+
+jar {
+    manifest {
+        attributes 'Main-Class': "${entryPointClass}"
+    }
 }
