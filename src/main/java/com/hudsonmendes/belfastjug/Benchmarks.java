@@ -6,6 +6,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.TimeUnit;
 
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
@@ -16,7 +18,7 @@ import com.hudsonmendes.belfastjug.utils.Data;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 
-public class DL4JBenchmark {
+public class Benchmarks {
 
     private static final Data SAMPLE = sample();
 
@@ -36,7 +38,7 @@ public class DL4JBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void dl4j() {
+    public void colt() {
         final DoubleMatrix1D vector = new DenseDoubleMatrix1D(SAMPLE.getNumbers());
         assertEquals(
             SAMPLE.checkSum(),
@@ -44,4 +46,14 @@ public class DL4JBenchmark {
             zero());
     }
 
+    @Benchmark
+    @BenchmarkMode(Mode.AverageTime)
+    @OutputTimeUnit(TimeUnit.MILLISECONDS)
+    public void vectorial() {
+        final INDArray vector = Nd4j.create(SAMPLE.getNumbers());
+        assertEquals(
+            SAMPLE.checkSum(),
+            vector.sumNumber().doubleValue(),
+            zero());
+    }
 }
