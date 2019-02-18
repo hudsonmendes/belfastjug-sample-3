@@ -1,15 +1,17 @@
 import numpy
+from time import sleep
 from datetime import datetime
 from tabulate import tabulate
 from colorama import Fore, Style
+from functools import reduce
+from numpy.lib.function_base import average
 
 DIMENSIONS = [
-    { 'rows':       100, 'columns': 10 },
-    { 'rows':      1000, 'columns': 10 },
-    { 'rows':     10000, 'columns': 10 },
-    { 'rows':    100000, 'columns': 10 },
-    { 'rows':   1000000, 'columns': 10 },
-    { 'rows':  10000000, 'columns': 10 },
+    { 'rows':  100000, 'columns': 5 },
+    { 'rows':  250000, 'columns': 5 },
+    { 'rows':  500000, 'columns': 5 },
+    { 'rows':  750000, 'columns': 5 },
+    { 'rows': 1000000, 'columns': 5 },
 ]
 
 def main():
@@ -54,7 +56,7 @@ def benchmark(dimensions):
     timed_vector = timed(lambda: matrix_add_vector(a, b, dimensions))
     checksum_serial = checksum(timed_serial['result'], dimensions)
     checksum_vector = checksum(timed_vector['result'], dimensions)
-    faster_in_ms = timed_vector["elapsed_in_ms"] - timed_serial["elapsed_in_ms"]
+    faster_in_ms = round(timed_vector["elapsed_in_ms"] - timed_serial["elapsed_in_ms"], 1)
     
     return [
         f'{str(dimensions["rows"])} x {str(dimensions["columns"])}',
@@ -81,13 +83,29 @@ def checksum(vector, dimensions):
     return total
 
 def timed(proc):
-    tic = datetime.now()
-    ret = proc()
-    toc = datetime.now()
-    elapsed_in_ms = int((toc - tic).microseconds / 1000)
-    return { 'result': ret, 'elapsed_in_ms': elapsed_in_ms }
+    sleep(1)
+    ret = None
+    elapseds_in_ms = []
+    for i in range(0, 20):
+        tic = datetime.now()
+        ret = proc()
+        toc = datetime.now()
+        elapsed_in_ms = int((toc - tic).microseconds / 1000)
+        elapseds_in_ms.append(elapsed_in_ms)
+    return { 'result': ret, 'elapsed_in_ms': avg(elapseds_in_ms) }
 
 def green(exp):
     return Fore.GREEN + exp + Style.RESET_ALL
+
+def avg(arr):
+    l = numpy.array(arr)
+    mean = numpy.mean(l, axis=0)
+    sd = numpy.std(l, axis=0)
+    final_list = [x for x in arr if (x > mean - 2 * sd)]
+    final_list = [x for x in final_list if (x < mean + 2 * sd)]
+    if final_list:
+        sum_of_all = reduce(lambda x, y: x + y, final_list)
+        return round(sum_of_all / len(final_list), 1)
+    return 0.
 
 main()
