@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.concurrent.TimeUnit;
 
+import org.nd4j.linalg.api.buffer.DataBuffer.Type;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.factory.Nd4j;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -49,7 +50,8 @@ public class Benchmarks {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void vectorial() {
+    public void nd4j() {
+        Nd4j.setDataType(Type.DOUBLE);
         final INDArray vector = Nd4j.create(SAMPLE.getNumbers());
         assertEquals(
             SAMPLE.checkSum(),
