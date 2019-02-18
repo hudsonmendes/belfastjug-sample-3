@@ -7,12 +7,12 @@ public class ArrayAddExamples {
             final double[] b) {
         assert a.length == b.length;
 
-        final double[] ret = new double[a.length];
+        final double[] r = new double[a.length];
 
         for (int i = 0; i < a.length; i++)
-            ret[i] = a[i] + b[i];
+            r[i] = a[i] + b[i];
 
-        return ret;
+        return r;
     }
 
 }

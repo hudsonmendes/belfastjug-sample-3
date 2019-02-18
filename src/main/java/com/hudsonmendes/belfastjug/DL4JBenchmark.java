@@ -16,7 +16,7 @@ import com.hudsonmendes.belfastjug.utils.Data;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 
-public class StreamBenchmark {
+public class DL4JBenchmark {
 
     private static final Data SAMPLE = sample();
 
@@ -36,7 +36,7 @@ public class StreamBenchmark {
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)
-    public void colt() {
+    public void dl4j() {
         final DoubleMatrix1D vector = new DenseDoubleMatrix1D(SAMPLE.getNumbers());
         assertEquals(
             SAMPLE.checkSum(),
