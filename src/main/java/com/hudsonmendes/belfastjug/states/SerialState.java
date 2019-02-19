@@ -1,18 +1,21 @@
 package com.hudsonmendes.belfastjug.states;
 
+import static com.hudsonmendes.belfastjug.Benchmarks.COLUMNS;
+import static com.hudsonmendes.belfastjug.Benchmarks.ROWS;
+
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
 import com.hudsonmendes.belfastjug.utils.DataUtils;
 
-@State(Scope.Group)
+@State(Scope.Benchmark)
 public class SerialState {
 
     private final double[][] numbers;
     private final double checkSum;
 
-    public SerialState(final int rows, final int columns) {
-        numbers = DataUtils.createArray(rows, columns);
+    public SerialState() {
+        numbers = DataUtils.createArray(ROWS, COLUMNS);
         checkSum = DataUtils.checkSum(getNumbers());
     }
 

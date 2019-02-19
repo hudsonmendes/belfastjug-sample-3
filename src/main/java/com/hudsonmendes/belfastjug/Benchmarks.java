@@ -16,6 +16,9 @@ import com.hudsonmendes.belfastjug.states.SerialState;
 
 public class Benchmarks {
 
+    public static final int ROWS = 100000;
+    public static final int COLUMNS = 500;
+
     @Benchmark
     @BenchmarkMode(Mode.AverageTime)
     @OutputTimeUnit(TimeUnit.MILLISECONDS)

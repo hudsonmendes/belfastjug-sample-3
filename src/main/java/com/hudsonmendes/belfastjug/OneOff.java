@@ -8,9 +8,6 @@ import com.hudsonmendes.belfastjug.states.SerialState;
 
 public class OneOff {
 
-    private static final int ROWS = 100000;
-    private static final int COLUMNS = 500;
-
     public static void main(final String... args) {
         printTimed("serial", OneOff::serial);
         printTimed("colt", OneOff::colt);
@@ -18,15 +15,15 @@ public class OneOff {
     }
 
     private static void serial() {
-        new Benchmarks().serial(new SerialState(ROWS, COLUMNS));
+        new Benchmarks().serial(new SerialState());
     }
 
     private static void colt() {
-        new Benchmarks().colt(new ColtState(ROWS, COLUMNS));
+        new Benchmarks().colt(new ColtState());
     }
 
     private static void nd4j() {
-        new Benchmarks().nd4j(new ND4JState(ROWS, COLUMNS));
+        new Benchmarks().nd4j(new ND4JState());
     }
 
     private static void printTimed(final String tag, final Runnable callable) {
